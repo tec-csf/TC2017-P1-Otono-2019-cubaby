@@ -1,3 +1,5 @@
+//2-3 obtenido (en parte) de github.com/devkapupara
+
 import java.util.*;
 
 class TwoThreeTreeV2<T extends Comparable<T> > implements Iterable
@@ -60,24 +62,24 @@ public Iterator<T> iterator()
     return traverse.ordered.iterator();         // Delegate the task of iterator to Linked-List's in built iterator.
 }
 
-public void printAscending(TwoThreeTreeV2<T> tree)
+public void printAscending()
 {
-    Iterator itr = iterator();
-    while (itr.hasNext())
+    ArrayList<T> ordenado = new ArrayList<>();
+    traverse.traverseTree();
+    ordenado = traverse.ordered;
+    for (int f = 0; f < ordenado.size(); f++)
     {
-        System.out.print(itr.next() + " ");
+        System.out.print(ordenado.get(f) + " ");
     }
+
     System.out.println("");
 }
 
 public void printDescending()
 {
-    Iterator  itr       = iterator();
-    ArrayList backwards = new ArrayList();
-    while (itr.hasNext())
-    {
-        backwards.add(itr.next());
-    }
+    ArrayList<T> backwards = new ArrayList();
+    traverse.traverseTree();
+    backwards = traverse.ordered;
     for (int s = backwards.size() - 1; s > 0; s--)
     {
         System.out.print(backwards.get(s) + " ");
@@ -87,6 +89,7 @@ public void printDescending()
 
 public void nodeDepth(Node n)
 {
+    traverse.traverseTree();
     int depth = 0;
     if (!root.children.contains(n))
     {
@@ -97,6 +100,7 @@ public void nodeDepth(Node n)
 
 public void nodeHeight(Node n)
 {
+    traverse.traverseTree();
     int height = 0;
     if (!root.children.contains(n))
     {
@@ -269,7 +273,7 @@ public static void main(String[] args)
     set.insert(1);
     set.insert(7777);
     set.insert(89);
-    set.insert(2333);
+    set.insert(2333); //Demos de inserción
     set.insert(90909);
     set.insert(47509);
     set.insert(377592);
@@ -282,29 +286,44 @@ public static void main(String[] args)
         elementos.add(rand);
         set.insert(rand);
     }
-    //set.printAscending(set);
-    //set.printDescending();
+
 
     System.out.println("");
-    System.out.println("Escriba uno de los numeros siguientes: 1 \t 7777 \t 89 \t 2333 \t 90909 \t 47509 \t 377592 \t 999999 \t 42 \t 576431 \n");
+    System.out.println("Escriba uno de los numeros siguientes para buscarlo: 1 \t 7777 \t 89 \t 2333 \t 90909 \t 47509 \t 377592 \t 999999 \t 42 \t 576431 \n");
     Integer searcher  = lector.nextInt();
     long    startTime = System.nanoTime();
 
-    set.search(searcher);
+    set.search(searcher); //Demo de función de búsqueda
     long endTime     = System.nanoTime();
     long timeElapsed = endTime - startTime;
     System.out.println("tiempo en milisegundos : " + timeElapsed / 100000); //si el resultado es 1,son 0.1 ms
 
+    //set.printAscending();     //Funciones cuyo nombre las explica:
 
-    /*  for (int x = 0; x < set.root.children.size(); x++)
-       {
-          if (set.root.children.get(x) != null)
-          {
-              set.nodeDepth(set.root.children.get(0));
-          }
-       }
-     */
+    //set.printDescending();
 
+
+
+
+
+
+    for (int x = 0; x < set.root.children.size(); x++)
+    {
+        if (set.root.children.get(x) != null)
+        {
+            set.nodeDepth(set.root.children.get(0));    //GetDepth
+        }
+    }
+
+    for (int x = 0; x < set.root.children.size(); x++)
+    {
+        if (set.root.children.get(x) != null)
+        {
+            set.nodeHeight(set.root.children.get(0));     //GetDepth
+        }
+    }
+
+    set.clear();                                                        //Delete
     /*  for (int r = 0; r < found.size(); r++)
        {
           System.out.println(found.get(r) + " ");   //Por si se requiere comprobar que se encontraron

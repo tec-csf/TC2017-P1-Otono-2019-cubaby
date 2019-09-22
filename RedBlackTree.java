@@ -1,3 +1,5 @@
+//RBT obtenido de github.com/Arsenalist
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -355,7 +357,7 @@ public int nodeLevel(RedBlackNode<T> node)
 }
 
 // @param: x, a RedBlackNode whose successor we must find
-// @return: return's the node the with the next largest key
+// @return: return's the node the with the nextLine largest key
 // from x.key
 public RedBlackNode<T> treeSuccessor(RedBlackNode<T> x)
 {
@@ -756,8 +758,13 @@ public static void main(String[] args)
     RedBlackTree<Integer> rbt       = new RedBlackTree<Integer>();
     int                   size      = 100000;
     ArrayList<Integer>    elementos = new ArrayList<Integer>();
-    Random                rng       = new Random();
-    Scanner               lector    = new Scanner(System.in);
+    Integer               input;
+    RedBlackNode<Integer> test     = new RedBlackNode<Integer>();
+    List<Integer>         tree     = new ArrayList<Integer>();
+    Random                rng      = new Random();
+    Scanner               lector   = new Scanner(System.in);
+    boolean               mainLoop = true;
+    int                   depth;
 
     rbt.insert(1);
     rbt.insert(7777);
@@ -778,32 +785,127 @@ public static void main(String[] args)
     }
     size = rbt.size();
     System.out.println("El tamaño es: " + size);
-    RedBlackNode<Integer> test   = rbt.search(elementos.get(3));
-    int                   height = rbt.nodeHeight(test);
-    //  System.out.println("La altura del nodo es: " + height);
 
-    int depth = rbt.nodeDepth(test);
-    // System.out.println("La profundidad del nodo es: " + depth);
+    while (mainLoop == true)
+    {
+        System.out.println("Escriba lo que quiere hacer: \n 1. Altura de un nodo \t 2. Profundidad de un nodo \n 3. Nivel de un nodo \t 4. Insertar un nodo \n 5. Eliminar un nodo \t 6. Imprimir In-order \n 7. Imprimir Post-order \n 8. Buscar un nodo");
+        int menu = lector.nextInt();
 
-    int level = rbt.nodeLevel(test);
-    // System.out.println("El nivel del nodo es: " + depth + " de " + level);
+        switch (menu)
+        {
+        case 1:
+            lector.nextLine();
+            System.out.println("Escriba el nodo a buscar");
+            input = lector.nextInt();
+            test  = rbt.search(elementos.get(input));
+            int height = rbt.nodeHeight(test);
+            System.out.println("La altura del nodo es: " + height);
+            break;
 
-    System.out.println("");
-    System.out.println("Escriba uno de los numeros siguientes: 1 \t 7777 \t 89 \t 2333 \t 90909 \t 47509 \t 377592 \t 999999 \t 42 \t 576431 \n");
-    Integer randSearch = lector.nextInt();
-    long    startTime  = System.nanoTime();
-    rbt.search(randSearch);
+        case 2:
+            lector.nextLine();
+            System.out.println("Escriba el nodo a buscar");
+            input = lector.nextInt();
+            test  = rbt.search(elementos.get(input));
+            depth = rbt.nodeDepth(test);
+            System.out.println("La profundidad del nodo es: " + depth);
+            break;
 
-    long endTime     = System.nanoTime();
-    long timeElapsed = endTime - startTime;
-    System.out.println("tiempo en milisegundos : " + timeElapsed / 100000); //si el resultado es 1,son 0.1 ms
+        case 3:
+            lector.nextLine();
+            System.out.println("Escriba el nodo a buscar");
+            input = lector.nextInt();
+            test  = rbt.search(elementos.get(input));
+            int level = rbt.nodeLevel(test);
+            depth = rbt.nodeDepth(test);
+            System.out.println("El nivel del nodo es: " + depth + " de " + level);
+            break;
 
-    /* tree = rbt.getGreaterThan(0, 100000);
-       List<Integer>         tree = new ArrayList<Integer>();    //Metodo para hacer PrintTree
-       for (int x = 0; x < tree.size(); x++)
-       {
-        System.out.println(" " + tree.get(x));
-       }
-     */
+        case 4:
+            lector.nextLine();
+            System.out.println("Escriba el nodo a insertar");
+            input = lector.nextInt();
+            rbt.insert(input);
+            System.out.println("Listo!");
+            break;
+
+        case 5:
+            lector.nextLine();
+            System.out.println("Escriba el nodo a eliminar");
+            input = lector.nextInt();
+            if (rbt.search(input) != null)
+            {
+                rbt.remove(rbt.search(input));
+                System.out.println("Listo!");
+            }
+            else
+                System.out.println("El elemento no se encuentra en el árbol");
+            break;
+
+        case 6:
+
+            tree = rbt.getGreaterThan(0, 100000);
+            //Metodo para hacer PrintTree ordenado
+            for (int x = 0; x < tree.size(); x++)
+            {
+                System.out.printf(" %d", tree.get(x));
+            }
+            break;
+
+        case 7:
+
+            tree = rbt.getGreaterThan(0, 1000000);
+            //Metodo para hacer PrintTree post-ordenado
+            for (int x = tree.size() - 1; x > 0; x--)
+            {
+                System.out.printf(" %d", tree.get(x));
+            }
+
+            break;
+
+        case 8:
+            lector.nextLine();
+            System.out.println("Escriba el nodo a buscar");
+            input = lector.nextInt();
+            long startSearch = System.nanoTime();
+            rbt.search(input);
+            long endSearch = System.nanoTime();
+            long time      = endSearch - startSearch;
+            if (rbt.search(input) != null)
+            {
+                System.out.println("Encontrado!");
+            }
+            else
+                System.out.println("No Encontrado!");
+            System.out.println("tiempo tardado en en milisegundos : 0.0" + time / 100000);
+
+            break;
+
+        default:
+            System.out.println("El valor que introdujo es incorrecto");
+            break;
+        }
+
+        System.out.println("Quiere realizar otra operacion? (y/n)");
+        char flag = lector.next().charAt(0);
+        lector.nextLine();
+
+        if (Character.compare(flag, 'n') == 0)
+        {
+            mainLoop = false;
+        }
+
+
+        /*  System.out.println("");
+           System.out.println("Escriba uno de los numeros siguientes: 1 \t 7777 \t 89 \t 2333 \t 90909 \t 47509 \t 377592 \t 999999 \t 42 \t 576431 \n");
+           Integer randSearch = lector.nextInt();
+           long    startTime  = System.nanoTime();
+           rbt.search(randSearch);           // METODO para probar los 10 numeros de la tarea
+
+           long endTime     = System.nanoTime();
+           long timeElapsed = endTime - startTime;
+           System.out.println("tiempo en milisegundos : 0.0" + timeElapsed / 100000);
+         */
+    }
 }
 }
