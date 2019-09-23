@@ -877,7 +877,7 @@ public static void main(String[] args)
             }
             else
                 System.out.println("No Encontrado!");
-            System.out.println("tiempo tardado en en milisegundos : 0.0" + time / 100000);
+            System.out.println("tiempo tardado en en milisegundos : 0.0" + time / 10000);
 
             break;
 

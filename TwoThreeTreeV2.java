@@ -296,7 +296,7 @@ public static void main(String[] args)
     set.search(searcher); //Demo de función de búsqueda
     long endTime     = System.nanoTime();
     long timeElapsed = endTime - startTime;
-    System.out.println("tiempo en milisegundos : " + timeElapsed / 100000); //si el resultado es 1,son 0.1 ms
+    System.out.println("tiempo en milisegundos : 0.0" + timeElapsed / 10000); //si el resultado es 1,son 0.01 ms
 
     //set.printAscending();     //Funciones cuyo nombre las explica:
 
